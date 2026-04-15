@@ -9,7 +9,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/Shineii86/CommitGraph?style=for-the-badge)](https://github.com/Shineii86/CommitGraph/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/Shineii86/CommitGraph?style=for-the-badge)](https://github.com/Shineii86/CommitGraph/fork)
 
-A **fully automated** Python script that runs in **Google Colab** to generate backdated commits and customize your GitHub contribution graph — all from your browser.
+A **fully automated** Python script that runs in **Google Colab** to generate backdated commits and customize your GitHub contribution graph.
 
 </div>
 
