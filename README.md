@@ -2,7 +2,7 @@
 
 [![Commit Graph Generator Banner](https://raw.githubusercontent.com/Shineii86/CommitGraph/main/images/CommitGraph.png)](https://github.com/Shineii86/CommitGraph)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Shineii86/CommitGraph/blob/main/notebooks/Commit_Graph_Generator.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Shineii86/CommitGraph/blob/main/notebooks/CommitGraph.ipynb)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -87,7 +87,7 @@ Before you begin, make sure you have:
 
 ### 1️⃣ One‑Click Colab
 
-<a href="https://colab.research.google.com/github/Shineii86/CommitGraph/blob/main/notebooks/Commit_Graph_Generator.ipynb">
+<a href="https://colab.research.google.com/github/Shineii86/CommitGraph/blob/main/notebooks/CommitGraph.ipynb">
   <img src="https://user-images.githubusercontent.com/125879861/255389999-a0d261cf-893a-46a7-9a3d-2bb52811b997.png" alt="Open In Colab" width="200px">
 </a>
 
