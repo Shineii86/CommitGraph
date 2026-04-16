@@ -54,7 +54,8 @@ This tool generates backdated commits over a specified date range, allowing you 
 - Creating a specific visual pattern or message on your contribution graph for fun.
 - Understanding how GitHub's contribution tracking works.
 
-> ⚠️ **Note:** This tool does **not** unlock any GitHub achievement. It is purely a customization utility.
+> [!NOTE]
+> This tool does **not** unlock any GitHub achievement. It is purely a customization utility.
 
 ---
 
