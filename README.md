@@ -31,6 +31,8 @@ A **fully automated** Python script that runs in **Google Colab** to generate ba
 - [Prerequisites](#-prerequisites)
 - [Step-by-Step Guide](#-step-by-step-guide)
 - [Configuration Options](#-configuration-options)
+  - [Random Commit Pattern](#-random-commit-pattern)
+  - [🎨 Custom Text Mode](#-custom-text-mode)
 - [How It Works](#-how-it-works-technical-overview)
 - [Troubleshooting](#-troubleshooting)
 - [Credits & Acknowledgments](#-credits--acknowledgments)
@@ -40,11 +42,16 @@ A **fully automated** Python script that runs in **Google Colab** to generate ba
 
 ## 🎯 What is This Tool?
 
-This tool generates backdated commits over a specified date range, allowing you to customize the appearance of your GitHub contribution graph. It creates a commit pattern that starts sparse and becomes increasingly dense toward the end date, simulating a period of intense development activity.
+This tool generates backdated commits over a specified date range, allowing you to customize the appearance of your GitHub contribution graph.
+
+**Two Modes Available:**
+
+1. **Random Commit Pattern** – Creates a gradually increasing density of commits (ramp‑up effect) over a date range.
+2. **🎨 Custom Text Mode** – Draws words like `HELLO` or `GITHUB` directly onto your contribution graph using a 5×7 pixel font. Each letter is mapped to specific days, creating a clean, pixel‑art style message.
 
 **Common Use Cases:**
 - Experimenting with Git's backdating capabilities for educational purposes.
-- Creating a specific visual pattern on your contribution graph for fun.
+- Creating a specific visual pattern or message on your contribution graph for fun.
 - Understanding how GitHub's contribution tracking works.
 
 > ⚠️ **Note:** This tool does **not** unlock any GitHub achievement. It is purely a customization utility.
@@ -57,7 +64,8 @@ This tool generates backdated commits over a specified date range, allowing you 
 |------------------------------|-------------------------------------------------------------------------|
 | ☁️ **No PC Required**         | Runs entirely in Google Colab (cloud‑based). Works on any device with a browser. |
 | 📅 **Flexible Date Range**    | Specify any start and end date for your commit pattern.                  |
-| 📈 **Customizable Density**   | Control the minimum and maximum commits per day at both ends of the range. |
+| 📈 **Customizable Density**   | Control the minimum and maximum commits per day.                         |
+| 🎨 **Draw Text**              | Spell words using the contribution graph's green squares.                |
 | 🔁 **Fully Automated**        | Clones, commits, and force-pushes automatically.                         |
 | 📦 **Minimal Dependencies**   | Only uses `GitPython` and standard libraries.                            |
 
@@ -93,27 +101,14 @@ Before you begin, make sure you have:
 
 ### 2️⃣ Fill in the Configuration Form
 
-Inside the Colab notebook, you'll find a single configuration cell with form fields:
-
-| Variable              | Description                                      | Example Value               |
-|-----------------------|--------------------------------------------------|-----------------------------|
-| `GITHUB_USERNAME`     | Your GitHub handle                               | `"Shineii86"`               |
-| `GITHUB_TOKEN`        | Personal Access Token (keep secret!)             | `"ghp_abc123..."`           |
-| `REPO_NAME`           | Target repository (must exist under your account)| `"commit-graph-demo"`       |
-| `START_DATE`          | First date for commits (YYYY-MM-DD)              | `"2026-04-01"`              |
-| `END_DATE`            | Last date for commits (YYYY-MM-DD)               | `"2026-04-15"`              |
-| `MIN_COMMITS_START`   | Minimum commits/day at beginning of range        | `0`                         |
-| `MAX_COMMITS_START`   | Maximum commits/day at beginning of range        | `2`                         |
-| `MIN_COMMITS_END`     | Minimum commits/day at end of range              | `20`                        |
-| `MAX_COMMITS_END`     | Maximum commits/day at end of range              | `29`                        |
-| `FORCE_PUSH`          | Overwrite remote history (required)              | `True`                      |
+Inside the Colab notebook, you'll find a single configuration cell with form fields. Choose between the **Random Pattern** (default) and **Custom Text Mode** by toggling `USE_CUSTOM_TEXT`.
 
 ### 3️⃣ Run the Notebook
 
 Click **Runtime → Run all** (or press `Ctrl+F9`). The notebook will:
 - Install `GitPython`
 - Clone your repository
-- Generate backdated commits over the specified date range
+- Generate backdated commits according to your chosen mode
 - Force-push the new history to GitHub
 
 You'll see real‑time output like:
@@ -121,23 +116,20 @@ You'll see real‑time output like:
 ```
 📅 Commit Graph Generator for user 'Shineii86'
 Repository: commit-graph-demo
-Date range: 2026-04-01 → 2026-04-15
 
-Total days: 15
-📥 Cloning repository...
+🎨 Drawing text: "HELLO"
+   Starting 0 week(s) after 2026-04-01
+   3 commit(s) per pixel
 
-🚀 Starting commit generation...
-
-📌 2026-04-01: 1 commits
-📌 2026-04-02: 2 commits
+📌 2026-04-01: 9 commits
+📌 2026-04-02: 6 commits
 ...
-📌 2026-04-14: 24 commits
-📌 2026-04-15: 28 commits
+✅ Created commits on 21 days to spell "HELLO".
 
-🎉 All commits created. Now pushing to remote...
+⏫ Pushing to remote...
 ✅ Force push complete.
 
-✨ Done! Your contribution graph should reflect the new commits shortly.
+✨ Done! Your contribution graph will update shortly.
 📊 Visit: https://github.com/Shineii86
 ```
 
@@ -150,32 +142,86 @@ Total days: 15
 
 ## ⚙️ Configuration Options
 
-All parameters are adjustable directly in the Colab form:
+All parameters are adjustable directly in the Colab form. The form is divided into three sections: **Common Settings**, **Custom Text Mode**, and **Random Pattern Mode**.
 
-| Parameter            | Default | Description                                                                 |
-|----------------------|---------|-----------------------------------------------------------------------------|
-| `START_DATE`         | `"2026-04-01"` | First date to create commits. |
-| `END_DATE`           | `"2026-04-15"` | Last date to create commits. |
-| `MIN_COMMITS_START`  | `0`      | Minimum commits on the first day. |
-| `MAX_COMMITS_START`  | `2`      | Maximum commits on the first day. |
-| `MIN_COMMITS_END`    | `20`     | Minimum commits on the last day. |
-| `MAX_COMMITS_END`    | `29`     | Maximum commits on the last day. |
-| `FORCE_PUSH`         | `True`   | Must be `True` to overwrite remote history with backdated commits. |
+### Common Settings (Always Required)
 
-### Commit Density Logic
+| Variable              | Description                                      | Example Value               |
+|-----------------------|--------------------------------------------------|-----------------------------|
+| `GITHUB_USERNAME`     | Your GitHub handle                               | `"Shineii86"`               |
+| `GITHUB_TOKEN`        | Personal Access Token (keep secret!)             | `"ghp_abc123..."`           |
+| `REPO_NAME`           | Target repository (must exist under your account)| `"commit-graph-demo"`       |
+| `FORCE_PUSH`          | Overwrite remote history (required)              | `True`                      |
+| `USE_CUSTOM_TEXT`     | Toggle between **Custom Text** (`True`) and **Random Pattern** (`False`). | `False` |
 
-The script linearly interpolates the commit count ranges from the start date to the end date. For example:
-- Day 1: 0–2 commits
-- Day 8 (midpoint): 10–15 commits
-- Day 15: 20–29 commits
+---
 
-This creates a gradual "ramp-up" effect on your contribution graph.
+### 📈 Random Commit Pattern
 
-### Customizing the Pattern
+Used when `USE_CUSTOM_TEXT = False`. Creates commits with a linear ramp‑up in density.
 
-- For a **constant density**, set `MIN_COMMITS_START = MIN_COMMITS_END` and `MAX_COMMITS_START = MAX_COMMITS_END`.
-- For a **decreasing pattern**, swap the start and end values.
-- For a **single spike**, set a short date range with high commit counts.
+| Parameter            | Default       | Description                                                                 |
+|----------------------|---------------|-----------------------------------------------------------------------------|
+| `START_DATE`         | `"2026-04-01"`| First date to create commits.                                                |
+| `END_DATE`           | `"2026-04-15"`| Last date to create commits.                                                 |
+| `MIN_COMMITS_START`  | `0`           | Minimum commits on the first day.                                            |
+| `MAX_COMMITS_START`  | `5`           | Maximum commits on the first day.                                            |
+| `MIN_COMMITS_END`    | `5`           | Minimum commits on the last day.                                             |
+| `MAX_COMMITS_END`    | `10`          | Maximum commits on the last day.                                             |
+
+**Commit Density Logic**  
+The script linearly interpolates the commit count ranges from start to end. For a constant density, set the start and end min/max values equal.
+
+---
+
+### 🎨 Custom Text Mode
+
+Used when `USE_CUSTOM_TEXT = True`. Draws a word or phrase using the contribution graph as a canvas.
+
+| Parameter                  | Default       | Description                                                                                                   |
+|----------------------------|---------------|---------------------------------------------------------------------------------------------------------------|
+| `CUSTOM_TEXT`              | `"HELLO"`     | The word to draw. Supported characters: uppercase `A-Z`, digits `0-9`, space, `.`, `!`, `?`.                  |
+| `START_DATE`               | `"2026-04-01"`| The Sunday of the week where drawing begins (the script auto‑adjusts to Sunday if a different day is given).  |
+| `TEXT_START_OFFSET_WEEKS`  | `0`           | Number of empty weeks to skip after `START_DATE` before drawing the text (shifts the text to the right).      |
+| `COMMITS_PER_PIXEL`        | `3`           | How many commits to create for each "on" pixel. Higher numbers = darker green squares (max shade usually at 4–5 commits). |
+
+#### How Custom Text Works
+
+- Each character is rendered using a **5×7 pixel font**. The top row corresponds to **Sunday**, the bottom row to **Saturday**.
+- Characters are placed side‑by‑side with a 1‑column gap.
+- The script calculates the exact days that need commits and pushes them with backdated timestamps.
+
+**Example: Drawing "HI"**
+
+| Setting                | Value                 |
+|------------------------|-----------------------|
+| `CUSTOM_TEXT`          | `"HI"`                |
+| `START_DATE`           | `"2026-04-05"` (a Sunday) |
+| `COMMITS_PER_PIXEL`    | `3`                   |
+
+The result on your graph:
+
+```
+Sun Mon Tue Wed Thu Fri Sat
+  █  █              █  █     ← 'H' (first week)
+  █  █              █  █
+  █  █              █  █
+  ████              ████
+  █  █              █  █
+  █  █              █  █
+  █  █              █  █
+
+Sun Mon Tue Wed Thu Fri Sat
+  ████                ██     ← 'I' (second week)
+   ██                 ██
+   ██                 ██
+   ██                 ██
+   ██                 ██
+   ██                 ██
+  ████                ██
+```
+
+> 💡 **Tip:** Because GitHub contribution weeks start on Sunday, choose a `START_DATE` that is a Sunday for predictable alignment.
 
 ---
 
@@ -185,12 +231,9 @@ The script performs the following steps:
 
 1. **Clones the Repository**: Uses your Personal Access Token to clone the specified repository into the Colab environment.
 2. **Configures Git User**: Sets the commit author and email to your GitHub identity.
-3. **Iterates Through Dates**: For each day in the date range:
-   - Calculates a random number of commits between the interpolated min/max values.
-   - For each commit:
-     - Writes a timestamp to `data.json`.
-     - Stages the file.
-     - Creates a commit with the author and committer dates explicitly set to the target date using Git's `--date` equivalent via `GitPython`.
+3. **Generates Commits**:
+   - **Random Mode**: Iterates through each day, calculates a random number of commits, and creates them with backdated timestamps.
+   - **Custom Text Mode**: Converts the input string to pixel coordinates, groups them by day, and creates the required number of commits per day.
 4. **Force Pushes**: Overwrites the remote repository's history with the new commit chain. This is necessary because backdating changes the commit timestamps, altering the existing history.
 
 > ⚠️ **Force push is destructive.** It replaces the entire commit history on the remote branch. Always use a dedicated repository.
@@ -206,7 +249,8 @@ The script performs the following steps:
 | Repository not found                              | Verify the repository name is correct and exists under your account.                          |
 | Contribution graph not updating                   | Wait a few minutes—GitHub's graph updates are not instant. Also ensure the repository is **public** or that you've enabled **private contributions** in your profile settings. |
 | `GitCommandError: cannot push`                    | Make sure `FORCE_PUSH` is set to `True`. Backdated commits require force-pushing.             |
-| Commits appear on wrong dates                     | Verify the date format is `YYYY-MM-DD` and that your system timezone doesn't affect the commit timestamps (the script uses UTC internally). |
+| Commits appear on wrong dates                     | Verify the date format is `YYYY-MM-DD`. For Custom Text mode, ensure `START_DATE` is a Sunday or let the script auto‑adjust. |
+| Custom text characters are missing or misaligned  | Only uppercase letters, digits, and the symbols `. ! ?` are supported. The script will skip unsupported characters. |
 
 ---
 
