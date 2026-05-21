@@ -151,6 +151,7 @@ All parameters are adjustable directly in the Colab form. The form is divided in
 |-----------------------|--------------------------------------------------|-----------------------------|
 | `GITHUB_USERNAME`     | Your GitHub handle                               | `"Shineii86"`               |
 | `GITHUB_TOKEN`        | Personal Access Token (keep secret!)             | `"ghp_abc123..."`           |
+| `GITHUB_EMAIL`        | Your noreply email (**auto-detected** from token if left blank) | `"123456+user@users.noreply.github.com"` |
 | `REPO_NAME`           | Target repository (must exist under your account)| `"commit-graph-demo"`       |
 | `FORCE_PUSH`          | Overwrite remote history (required)              | `True`                      |
 | `USE_CUSTOM_TEXT`     | Toggle between **Custom Text** (`True`) and **Random Pattern** (`False`). | `False` |
@@ -250,6 +251,7 @@ The script performs the following steps:
 | Repository not found                              | Verify the repository name is correct and exists under your account.                          |
 | Contribution graph not updating                   | Wait a few minutes—GitHub's graph updates are not instant. Also ensure the repository is **public** or that you've enabled **private contributions** in your profile settings. |
 | `GitCommandError: cannot push`                    | Make sure `FORCE_PUSH` is set to `True`. Backdated commits require force-pushing.             |
+| Commits not showing on contribution graph         | Verify `GITHUB_EMAIL` matches your noreply email (`ID+username@users.noreply.github.com`). The script auto-detects this from your token, but if it fails, set it manually at https://github.com/settings/emails. |
 | Commits appear on wrong dates                     | Verify the date format is `YYYY-MM-DD`. For Custom Text mode, ensure `START_DATE` is a Sunday or let the script auto‑adjust. |
 | Custom text characters are missing or misaligned  | Only uppercase letters, digits, and the symbols `. ! ?` are supported. The script will skip unsupported characters. |
 

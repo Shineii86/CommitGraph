@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2026-05-21
+
+### Changed
+- `GITHUB_EMAIL` now defaults to empty and **auto-detects** the correct noreply email from the GitHub token via the API.
+- Removed hardcoded email — works for any user out of the box.
+- Added auto-detection error handling with clear fallback instructions.
+- Updated README troubleshooting table with contribution graph fix guidance.
+
 ## [1.1.0] - 2026-05-21
 
 ### Fixed
