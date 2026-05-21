@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2026-05-21
+
+### Added
+- **Lowercase letter support** (a-z) — auto-mapped to pixel font bitmaps.
+- **22 new symbols** — `@ # & + - = : ; , ( ) / ' " *` and more. Total: 80 characters.
+- **Dry-run preview mode** (`DRY_RUN`) — see the contribution pattern before committing. Shows ASCII graph for custom text, day-by-day breakdown for random mode.
+- **Intermediate push** (`INTERMEDIATE_PUSH_DAYS`) — push every N days during long runs to avoid losing progress on failure.
+- **Commit count estimation** — shows total commits before generation starts.
+- **Visual progress bar** — `[████████░░░░] 67%` style output during random pattern generation.
+- **ASCII graph preview** — renders the custom text pattern as a grid before committing.
+
+### Changed
+- Updated README with new configuration options and feature descriptions.
+
 ## [1.1.1] - 2026-05-21
 
 ### Changed

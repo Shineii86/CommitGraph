@@ -66,8 +66,11 @@ This tool generates backdated commits over a specified date range, allowing you 
 | ☁️ **No PC Required**         | Runs entirely in Google Colab (cloud‑based). Works on any device with a browser. |
 | 📅 **Flexible Date Range**    | Specify any start and end date for your commit pattern.                  |
 | 📈 **Customizable Density**   | Control the minimum and maximum commits per day.                         |
-| 🎨 **Draw Text**              | Spell words using the contribution graph's green squares.                |
+| 🎨 **Draw Text**              | Spell words using the contribution graph's green squares (uppercase, lowercase, digits, symbols). |
 | 🔁 **Fully Automated**        | Clones, commits, and force-pushes automatically.                         |
+| 🔍 **Dry-Run Preview**        | See the pattern before committing — no surprises.                        |
+| ⏫ **Intermediate Push**      | Push every N days to avoid losing progress on long runs.                 |
+| 📊 **Progress Bar**           | Visual progress indicator during generation.                             |
 | 📦 **Minimal Dependencies**   | Only uses `GitPython` and standard libraries.                            |
 
 ---
@@ -154,6 +157,8 @@ All parameters are adjustable directly in the Colab form. The form is divided in
 | `GITHUB_EMAIL`        | Your noreply email (**auto-detected** from token if left blank) | `"123456+user@users.noreply.github.com"` |
 | `REPO_NAME`           | Target repository (must exist under your account)| `"commit-graph-demo"`       |
 | `FORCE_PUSH`          | Overwrite remote history (required)              | `True`                      |
+| `DRY_RUN`             | Preview mode — shows pattern without creating commits | `False`                 |
+| `INTERMEDIATE_PUSH_DAYS` | Push every N days during long runs (0 = push only at end) | `0`               |
 | `USE_CUSTOM_TEXT`     | Toggle between **Custom Text** (`True`) and **Random Pattern** (`False`). | `False` |
 
 ---
