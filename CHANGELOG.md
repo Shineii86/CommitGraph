@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2026-05-22
+
+### Fixed
+- **Critical: `NameError` in DRY_RUN + Custom Text mode** — `max_week` was referenced in `preview_graph()` call before it was defined. Moved pixel computation and `max_week` calculation above the dry-run check.
+- **Lowercase letter bitmaps** — Previous lowercase letters were identical copies of uppercase. Replaced all 26 lowercase characters (a-z) with distinct, properly-sized pixel designs (e.g., `a` now has a flat top, `b` has an ascender, etc.).
+- **`'END_DATE' in locals()` always True** — Removed this dead check since `END_DATE` is always defined in the config section. The custom text mode now uses `max_week` to determine date range instead.
+
+### Added
+- **Modular project structure** — Split monolithic notebook into reusable Python modules:
+  - `src/font.py` — 5×7 pixel font bitmaps with `text_to_pixels()` and `get_supported_chars()`
+  - `src/config.py` — Configuration dataclasses (`AppConfig`, `GitHubConfig`, etc.) with validation
+  - `src/utils.py` — Utility functions (progress bar, commit estimation, ASCII graph preview)
+  - `src/generator.py` — Core commit generation engine (clone, commit, push logic)
+  - `src/__init__.py` — Package metadata
+- **Standalone CLI** (`commitgraph.py`) — Run directly from the command line without Google Colab. Supports all features via `argparse` flags.
+- **`requirements.txt`** — Explicit dependency declaration for pip installs.
+- **Additional symbols in font** — Added `_ ~ ^ < > [ ] { } | \ $ % `` ` `` to the pixel font (total: 95 characters).
+- **Configuration validation** — `AppConfig.validate()` checks for missing tokens, empty text, invalid dates, and other errors before execution.
+
+### Changed
+- **Notebook refactored** — Colab notebook is now a thin wrapper that imports from `src/` modules instead of containing all logic inline. Easier to maintain and test.
+- **README updated** — Added project structure diagram, standalone CLI usage section, and CLI options table.
+
 ## [1.2.0] - 2026-05-21
 
 ### Added

@@ -9,7 +9,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/Shineii86/CommitGraph?style=for-the-badge)](https://github.com/Shineii86/CommitGraph/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/Shineii86/CommitGraph?style=for-the-badge)](https://github.com/Shineii86/CommitGraph/fork)
 
-A **fully automated** Python script that runs in **Google Colab** to generate backdated commits and customize your GitHub contribution graph.
+A **fully automated** Python script that runs in **Google Colab** or as a **standalone CLI** to generate backdated commits and customize your GitHub contribution graph.
 
 </div>
 
@@ -144,6 +144,65 @@ Repository: commit-graph-demo
 
 ---
 
+## 💻 Standalone CLI (No Colab Required)
+
+You can run CommitGraph directly from the command line on any machine with Python 3.8+.
+
+### Install
+
+```bash
+git clone https://github.com/Shineii86/CommitGraph.git
+cd CommitGraph
+pip install -r requirements.txt
+```
+
+### Usage
+
+```bash
+# Custom text mode
+python commitgraph.py --token ghp_xxx --repo my-demo --text HELLO
+
+# Random pattern mode
+python commitgraph.py --token ghp_xxx --repo my-demo --start 2026-04-01 --end 2026-04-15
+
+# Dry run (preview only)
+python commitgraph.py --token ghp_xxx --repo my-demo --text HI --dry-run
+
+# Full options
+python commitgraph.py \
+  --token ghp_xxx \
+  --username MyUser \
+  --repo my-demo \
+  --text "HELLO WORLD" \
+  --commits-per-pixel 4 \
+  --offset-weeks 2 \
+  --push-every 7
+```
+
+### CLI Options
+
+| Flag                   | Description                                        | Default    |
+|------------------------|----------------------------------------------------|------------|
+| `--token`              | GitHub Personal Access Token (required)            | —          |
+| `--repo`               | Target repository name (required)                  | —          |
+| `--username`           | GitHub username                                    | `Shineii86`|
+| `--email`              | Noreply email (auto-detected if omitted)           | auto       |
+| `--text`               | Text to draw (enables custom text mode)            | —          |
+| `--random`             | Use random pattern mode                            | default    |
+| `--offset-weeks`       | Weeks to skip before drawing text                  | `0`        |
+| `--commits-per-pixel`  | Commits per pixel (higher = darker)                | `3`        |
+| `--start`              | Start date (YYYY-MM-DD)                            | `2026-04-01`|
+| `--end`                | End date (YYYY-MM-DD)                              | `2026-04-15`|
+| `--min-start`          | Min commits/day at start                           | `0`        |
+| `--max-start`          | Max commits/day at start                           | `5`        |
+| `--min-end`            | Min commits/day at end                             | `5`        |
+| `--max-end`            | Max commits/day at end                             | `10`       |
+| `--no-force-push`      | Don't force push                                   | —          |
+| `--dry-run`            | Preview only, no commits created                   | —          |
+| `--push-every`         | Intermediate push every N days                     | `0`        |
+
+---
+
 ## ⚙️ Configuration Options
 
 All parameters are adjustable directly in the Colab form. The form is divided into three sections: **Common Settings**, **Custom Text Mode**, and **Random Pattern Mode**.
@@ -229,6 +288,29 @@ Sun Mon Tue Wed Thu Fri Sat
 ```
 
 > 💡 **Tip:** Because GitHub contribution weeks start on Sunday, choose a `START_DATE` that is a Sunday for predictable alignment.
+
+---
+
+## 📁 Project Structure
+
+```
+CommitGraph/
+├── commitgraph.py          # Standalone CLI entry point
+├── requirements.txt        # Python dependencies
+├── src/
+│   ├── __init__.py         # Package metadata
+│   ├── config.py           # Configuration dataclasses & validation
+│   ├── font.py             # 5×7 pixel font bitmaps (A-Z, a-z, 0-9, symbols)
+│   ├── generator.py        # Core commit generation engine
+│   └── utils.py            # Progress bars, estimation, graph preview
+├── notebooks/
+│   └── CommitGraph.ipynb   # Google Colab notebook (uses src/ modules)
+├── images/
+│   └── CommitGraph.png     # Banner image
+├── CHANGELOG.md
+├── README.md
+└── LICENSE
+```
 
 ---
 
