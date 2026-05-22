@@ -79,10 +79,16 @@ def setup_repo(config: AppConfig) -> tuple[Repo, str, str]:
     data_file = "data.json"
 
     if os.path.exists(local_dir):
-        print("📂 Opening existing repository...")
-        repo = Repo(local_dir)
-        origin = repo.remote(name="origin")
-        origin.pull()
+        try:
+            repo = Repo(local_dir)
+            print("📂 Opening existing repository...")
+            origin = repo.remote(name="origin")
+            origin.pull()
+        except Exception:
+            print("⚠️  Existing directory is not a valid repo. Re-cloning...")
+            import shutil
+            shutil.rmtree(local_dir)
+            repo = Repo.clone_from(repo_url, local_dir)
     else:
         print("📥 Cloning repository...")
         repo = Repo.clone_from(repo_url, local_dir)
